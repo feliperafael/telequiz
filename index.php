@@ -60,7 +60,7 @@ require_once("classes/load.php");
 		
 			
 			<div class="col-xs-12 col-md-6 col-lg-3">
-				teste
+				Telequiz
 				<svg class="glyph stroked tv"><use xlink:href="#stroked-tv"></use></svg>
 			</div><!--/.col-->
 		</div><!--/.row-->

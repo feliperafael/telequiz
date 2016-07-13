@@ -3,8 +3,8 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 10-Jul-2016 às 23:41
--- Versão do servidor: 10.1.13-MariaDB
+-- Generation Time: 13-Jul-2016 às 03:17
+-- Versão do servidor: 5.7.10-log
 -- PHP Version: 7.0.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -19,6 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `telequiz_database`
 --
+CREATE DATABASE IF NOT EXISTS `telequiz_database` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `telequiz_database`;
 
 -- --------------------------------------------------------
 
@@ -26,20 +28,24 @@ SET time_zone = "+00:00";
 -- Estrutura da tabela `mac_code`
 --
 
-CREATE TABLE `mac_code` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `mac_code`;
+CREATE TABLE IF NOT EXISTS `mac_code` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `mac` varchar(20) NOT NULL,
   `code_validation` int(11) NOT NULL,
-  `time_stamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='relaciona um mac a um código de validação ( lembrar de criar rotina de limpeza)';
+  `time_stamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1 COMMENT='relaciona um mac a um código de validação ( lembrar de criar rotina de limpeza)';
 
 --
 -- Extraindo dados da tabela `mac_code`
 --
 
 INSERT INTO `mac_code` (`id`, `mac`, `code_validation`, `time_stamp`) VALUES
-(1, '123', 5216, '2016-07-10 21:10:57'),
-(2, '233', 9424, '2016-07-10 21:14:23');
+(1, 'aaaa', 1000, '2016-07-13 00:41:45'),
+(2, 'BBB', 8864, '2016-07-13 00:42:32'),
+(3, 'cccB', 4016, '2016-07-13 01:00:08'),
+(4, 'ccfsfsfscB', 2296, '2016-07-13 01:00:35');
 
 -- --------------------------------------------------------
 
@@ -47,20 +53,24 @@ INSERT INTO `mac_code` (`id`, `mac`, `code_validation`, `time_stamp`) VALUES
 -- Estrutura da tabela `mac_user`
 --
 
-CREATE TABLE `mac_user` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `mac_user`;
+CREATE TABLE IF NOT EXISTS `mac_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `mac` varchar(100) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `time_stamp` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `time_stamp` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `mac_user`
 --
 
 INSERT INTO `mac_user` (`id`, `mac`, `user_id`, `time_stamp`) VALUES
-(1, '123', 1, '2016-07-10 18:11:58'),
-(2, '233', 2, '2016-07-10 18:15:39');
+(1, 'aaaa', 1, '2016-07-12 21:41:58'),
+(2, 'BBB', 1, '2016-07-12 21:42:43'),
+(3, 'cccB', 2, '2016-07-12 22:00:16'),
+(4, 'ccfsfsfscB', 2, '2016-07-12 22:00:44');
 
 -- --------------------------------------------------------
 
@@ -68,23 +78,30 @@ INSERT INTO `mac_user` (`id`, `mac`, `user_id`, `time_stamp`) VALUES
 -- Estrutura da tabela `score_table`
 --
 
-CREATE TABLE `score_table` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `score_table`;
+CREATE TABLE IF NOT EXISTS `score_table` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `score` int(11) NOT NULL,
   `mac` varchar(11) NOT NULL,
-  `data_hora` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `data_hora` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `score_table`
 --
 
 INSERT INTO `score_table` (`id`, `score`, `mac`, `data_hora`) VALUES
-(1, 1000, '123', '2016-07-10 21:13:56'),
-(2, 1000, '123', '2016-07-10 21:14:00'),
-(3, 1000, '233', '2016-07-10 21:15:47'),
-(4, 1000, '233', '2016-07-10 21:15:57'),
-(5, 1000, '233', '2016-07-10 21:15:58');
+(1, 10000, 'aaaa', '2016-07-13 00:42:08'),
+(2, 10000, 'BBB', '2016-07-13 00:42:49'),
+(3, 10000, 'cccB', '2016-07-13 01:00:20'),
+(4, 10000, 'cccB', '2016-07-13 01:00:21'),
+(5, 10000, 'cccB', '2016-07-13 01:00:22'),
+(6, 10000, 'ccfsfsfscB', '2016-07-13 01:00:47'),
+(7, 10000, 'ccfsfsfscB', '2016-07-13 01:00:48'),
+(8, 10000, 'ccfsfsfscB', '2016-07-13 01:00:48'),
+(9, 10000, 'ccfsfsfscB', '2016-07-13 01:00:49'),
+(10, 10000, 'ccfsfsfscB', '2016-07-13 01:00:55');
 
 -- --------------------------------------------------------
 
@@ -92,74 +109,26 @@ INSERT INTO `score_table` (`id`, `score`, `mac`, `data_hora`) VALUES
 -- Estrutura da tabela `user`
 --
 
-CREATE TABLE `user` (
-  `id_user` int(11) NOT NULL,
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE IF NOT EXISTS `user` (
+  `id_user` int(11) NOT NULL AUTO_INCREMENT,
   `nome_user` varchar(100) NOT NULL,
   `senha_user` varchar(60) NOT NULL,
   `email_user` varchar(255) NOT NULL,
-  `status_user` tinyint(4) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `status_user` tinyint(4) NOT NULL,
+  PRIMARY KEY (`id_user`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `user`
 --
 
 INSERT INTO `user` (`id_user`, `nome_user`, `senha_user`, `email_user`, `status_user`) VALUES
-(1, 'Eduardo', '$2a$08$MTg0ODk3NTY0NDU3ODJiYONV1jlnACS0VCU9bS8YBLrI7j2snJaBK', 'rsoares.eduardo@gmail.com', 1),
-(2, 'tacon', '$2a$08$NDk0NDA5MTMwNTc4MmJhYua.h05ki2zQFLuBbaHrX6iuS1kCNCDKa', 'tacon.tacon@gmail.com', 1);
+(1, 'Eduardo', '$2a$08$NjI0NjIzNjU1Nzg1OGUwYe3xA9t5CFwmAoaTVyYF8hH33VZ1NCebS', 'rsoares.eduardo@gmail.com', 1),
+(2, 'tacon', '$2a$08$MTM5MzQ1OTEwNjU3ODU5MeWig7LmuPvjeHog4EnHGVdG8Vud.Uvhy', 'tacon.tacon@gmail.com', 1),
+(3, 'biiirl', '$2a$08$MzA4Njk2MDk0NTc4NTkyZOOOfWZT8aIgRBVgL3NiOmuhmlE5W8cYm', 'siasuasuhuas@ashuhuasuhas.com', 1),
+(4, 'biiirl', '$2a$08$ODAyNTY3NzQxNTc4NTkzM.ITmvAWT.0JlAXsq.3NyJKiL4XbZ3awe', 'birl@birl.com', 1);
 
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `mac_code`
---
-ALTER TABLE `mac_code`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `mac_user`
---
-ALTER TABLE `mac_user`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `score_table`
---
-ALTER TABLE `score_table`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`id_user`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `mac_code`
---
-ALTER TABLE `mac_code`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `mac_user`
---
-ALTER TABLE `mac_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `score_table`
---
-ALTER TABLE `score_table`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
---
--- AUTO_INCREMENT for table `user`
---
-ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

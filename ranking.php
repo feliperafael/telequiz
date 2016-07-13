@@ -114,13 +114,18 @@ unset($_POST);
                 <?php
                 //print_r($dados);
                 $indice = 0;
+                $points = 0;
                 foreach($ranking as $score){
                     ++$indice;
+                    if(!isset($score['points']))
+                        $points = 0;
+                    else
+                        $points = $score['points'];
                     echo '
 							 <tr>
 							    <td>'.$indice.'</td>
 								<td>'.$score['name'].'</td>
-								<td>'.$score['points'].'</td>
+								<td>'.$points.'</td>
 							 </tr>
 							
 							';

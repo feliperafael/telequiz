@@ -121,7 +121,7 @@ class modelUser{
         foreach($dados as $user ){
            // echo $user['id_user'];
             $mac = $macDao->get_mac($user["id_user"]);
-            $points = $scoreDao->getPoints($mac['mac']);
+            $points = $scoreDao->getPoints($user["id_user"]);
             //echo $points['POINTS']. "<br/>";
             $array = array(
                 'name' => $user['nome_user'], 'points' => $points['POINTS']);

@@ -27,9 +27,10 @@ class scoreMacDAO {
             return true;
         }
     }
-    public function getPoints($mac){
-        $sql = conexao::getInstance()->prepare("SELECT SUM(`score`) AS `POINTS` FROM `".$this->tabela."` WHERE `mac` =:mac");
-        $sql->bindValue(':mac', $mac);
+    public function getPoints($id){
+        $sql = conexao::getInstance()->prepare("SELECT SUM(score_table.score) AS POINTS  FROM user INNER JOIN mac_user
+ ON (mac_user.user_id = user.id_user) INNER  JOIN score_table ON (score_table.mac = mac_user.mac ) WHERE user.id_user =:id");
+        $sql->bindValue(':id', $id);
         if($sql->execute()){
             $points = $sql->fetch(PDO::FETCH_ASSOC);
             return $points;
