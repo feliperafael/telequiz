@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 13-Jul-2016 às 03:17
+-- Generation Time: 13-Jul-2016 às 19:16
 -- Versão do servidor: 5.7.10-log
 -- PHP Version: 7.0.8
 
@@ -29,13 +29,12 @@ USE `telequiz_database`;
 --
 
 DROP TABLE IF EXISTS `mac_code`;
-CREATE TABLE IF NOT EXISTS `mac_code` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `mac_code` (
+  `id` int(11) NOT NULL,
   `mac` varchar(20) NOT NULL,
   `code_validation` int(11) NOT NULL,
-  `time_stamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1 COMMENT='relaciona um mac a um código de validação ( lembrar de criar rotina de limpeza)';
+  `time_stamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='relaciona um mac a um código de validação ( lembrar de criar rotina de limpeza)';
 
 --
 -- Extraindo dados da tabela `mac_code`
@@ -54,13 +53,12 @@ INSERT INTO `mac_code` (`id`, `mac`, `code_validation`, `time_stamp`) VALUES
 --
 
 DROP TABLE IF EXISTS `mac_user`;
-CREATE TABLE IF NOT EXISTS `mac_user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `mac_user` (
+  `id` int(11) NOT NULL,
   `mac` varchar(100) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `time_stamp` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+  `time_stamp` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `mac_user`
@@ -79,13 +77,12 @@ INSERT INTO `mac_user` (`id`, `mac`, `user_id`, `time_stamp`) VALUES
 --
 
 DROP TABLE IF EXISTS `score_table`;
-CREATE TABLE IF NOT EXISTS `score_table` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `score_table` (
+  `id` int(11) NOT NULL,
   `score` int(11) NOT NULL,
   `mac` varchar(11) NOT NULL,
-  `data_hora` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+  `data_hora` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `score_table`
@@ -110,14 +107,13 @@ INSERT INTO `score_table` (`id`, `score`, `mac`, `data_hora`) VALUES
 --
 
 DROP TABLE IF EXISTS `user`;
-CREATE TABLE IF NOT EXISTS `user` (
-  `id_user` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `user` (
+  `id_user` int(11) NOT NULL,
   `nome_user` varchar(100) NOT NULL,
   `senha_user` varchar(60) NOT NULL,
   `email_user` varchar(255) NOT NULL,
-  `status_user` tinyint(4) NOT NULL,
-  PRIMARY KEY (`id_user`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+  `status_user` tinyint(4) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `user`
@@ -129,6 +125,58 @@ INSERT INTO `user` (`id_user`, `nome_user`, `senha_user`, `email_user`, `status_
 (3, 'biiirl', '$2a$08$MzA4Njk2MDk0NTc4NTkyZOOOfWZT8aIgRBVgL3NiOmuhmlE5W8cYm', 'siasuasuhuas@ashuhuasuhas.com', 1),
 (4, 'biiirl', '$2a$08$ODAyNTY3NzQxNTc4NTkzM.ITmvAWT.0JlAXsq.3NyJKiL4XbZ3awe', 'birl@birl.com', 1);
 
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `mac_code`
+--
+ALTER TABLE `mac_code`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `mac_user`
+--
+ALTER TABLE `mac_user`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `score_table`
+--
+ALTER TABLE `score_table`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id_user`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `mac_code`
+--
+ALTER TABLE `mac_code`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `mac_user`
+--
+ALTER TABLE `mac_user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `score_table`
+--
+ALTER TABLE `score_table`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
